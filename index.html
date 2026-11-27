@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="누적 일본어 단어장">
@@ -312,6 +312,240 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+
+  
+    /* iPhone 15 Pro: fixed viewport fit and stable word-card geometry */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    @media (max-width: 767px) {
+      body {
+        min-width: 0 !important;
+        width: 100% !important;
+        overflow-x: hidden !important;
+      }
+      main {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+      #wordListContainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: hidden !important;
+        gap: 10px !important;
+      }
+      #wordListContainer > .word-card {
+        display: block;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 13px !important;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(15,23,42,.045);
+      }
+      .word-card-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+      }
+      .word-card-title {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        font-size: 29px;
+        line-height: 1.25;
+        font-weight: 750;
+        letter-spacing: .01em;
+        color: #0f172a;
+      }
+      .word-card-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        width: 100%;
+        min-width: 0;
+      }
+      .word-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        min-width: 0;
+        width: 100%;
+        min-height: 38px;
+        padding: 7px 6px;
+        border: 1px solid #dbe3ef;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #475569;
+        font-size: 11px;
+        font-weight: 650;
+        line-height: 1.2;
+        text-align: center;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+      button.word-action { cursor: pointer; }
+      .word-action.is-active {
+        color: #4338ca;
+        background: #eef2ff;
+        border-color: #c7d2fe;
+      }
+      .word-review-action {
+        color: #92400e;
+        background: #fffbeb;
+        border-color: #fde68a;
+      }
+      .word-review-action.is-review {
+        color: #78350f;
+        background: #fef3c7;
+        border-color: #f59e0b;
+      }
+      .word-review-action input {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 15px;
+        margin: 0;
+        accent-color: #d97706;
+      }
+      .word-answer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+        min-width: 0;
+        margin-top: 10px;
+        padding: 9px 10px;
+        border: 1px solid #fde68a;
+        border-radius: 10px;
+        background: #fffbeb;
+        color: #78350f;
+        font-size: 12px;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+      }
+      .word-answer.is-hidden { display: none; }
+      .word-input-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+        width: 100%;
+        min-width: 0;
+        margin-top: 14px;
+      }
+      .word-input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
+        min-width: 0;
+      }
+      .word-input-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+        min-width: 0;
+      }
+      .word-input-label label {
+        min-width: 0;
+        color: #334155;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .word-input-label label span {
+        color: #94a3b8;
+        font-size: 10px;
+        font-weight: 400;
+      }
+      .word-input-label [id^="pronStatus_"],
+      .word-input-label [id^="meanStatus_"] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 54px;
+        width: 54px;
+        min-width: 54px;
+        height: 22px;
+        padding: 0 !important;
+        white-space: nowrap;
+        font-size: 10px !important;
+      }
+      .word-answer-input {
+        display: block;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        height: 48px;
+        min-height: 48px;
+        padding: 11px 12px !important;
+        border-radius: 11px !important;
+        font-size: 16px !important;
+        line-height: 24px;
+        box-shadow: none;
+        transition: border-color .12s ease, background-color .12s ease;
+      }
+      .word-hira-preview {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 7px;
+        width: 100%;
+        min-width: 0;
+        height: 34px;
+        min-height: 34px;
+        padding: 4px 8px;
+        border: 1px solid #ddd6fe;
+        border-radius: 9px;
+        background: #f5f3ff;
+        color: #5b21b6;
+        font-size: 11px;
+        overflow: hidden;
+      }
+      .word-hira-preview.is-preview-hidden {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .word-hira-preview > span:nth-child(2) {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 700;
+      }
+      .word-hira-preview button {
+        min-height: 25px;
+        padding: 3px 8px;
+        border-radius: 7px;
+        background: #6d28d9;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+      #wordListContainer .kanji-card-row {
+        width: 100%;
+        max-width: 100%;
+      }
+      #wordListContainer .kanji-card-row > div {
+        flex: 0 0 min(76vw, 260px);
+      }
     }
 
   </style>
@@ -2727,141 +2961,81 @@
           : `<span id="meanStatus_${item.id}" class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-400">입력 전</span>`;
 
         return `
-          <div class="p-4 sm:p-5 transition hover:bg-slate-50/70 ${completed ? 'bg-emerald-50/20' : ''}">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:items-start">
+          <article class="word-card ${completed ? 'is-completed' : ''}">
+            <div class="word-card-head">
+              <div class="word-card-title jp-font">${escapeHtml(item.word)}</div>
 
-              <!-- 1. 회차 / 번호 -->
-              <div class="md:col-span-1 flex md:flex-col items-center justify-between md:justify-center gap-1.5 md:pt-1.5">
-              <!-- 2. 일본어 단어 및 발음 듣기 · 한자 분석 버튼 -->
-              <div class="md:col-span-3 md:pt-1">
-                <div class="flex items-center justify-between md:justify-start gap-2 flex-wrap">
-                  <div class="jp-font text-2xl sm:text-[26px] font-bold text-slate-900 tracking-wide">
-                    ${escapeHtml(item.word)}
-                  </div>
-                  <button type="button" onclick="speakJapanese('${escapeAttr(item.word)}', '${escapeAttr(item.kana)}')"
-                    class="touch-target inline-flex items-center justify-center w-9 h-9 rounded-xl bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-700 transition cursor-pointer"
-                    title="일본어 발음 듣기">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
-                    </svg>
+              <div class="word-card-actions">
+                ${hasKanji ? `
+                  <button type="button" onclick="toggleKanjiAnalysis(${item.id})"
+                    class="word-action ${isKanjiOpen ? 'is-active' : ''}">
+                    ${isKanjiOpen ? '한자 닫기' : '한자 분석'}
                   </button>
-                  ${hasKanji ? `
-                    <button type="button" onclick="toggleKanjiAnalysis(${item.id})"
-                      class="touch-target inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold border transition cursor-pointer ${
-                        isKanjiOpen
-                          ? 'bg-indigo-600 text-white border-indigo-600'
-                          : 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100'
-                      }">
-                      <span>${isKanjiOpen ? '한자 분석 닫기' : '한자 분석'}</span>
-                    </button>
-                  ` : ''}
-                </div>
-
-                ${isRevealed ? `
-                  <div class="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
-                    <span class="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 font-semibold jp-font">
-                      ${escapeHtml(item.kana)}
-                    </span>
-                    <span class="text-slate-500">[${escapeHtml(item.koPron)}]</span>
-                    <span class="text-slate-700 font-semibold">· ${escapeHtml(item.meaning)}</span>
-                  </div>
-                ` : `
-                  <div class="mt-1.5">
-                    <button type="button" onclick="toggleRevealSingle(${item.id})"
-                      class="text-xs text-slate-400 hover:text-indigo-600 underline underline-offset-2 transition cursor-pointer py-1">
-                      정답 보기
-                    </button>
-                  </div>
-                `}
-              </div>
-
-              <!-- 3. 읽는 법 입력 (하단 히라가나 변환 미리보기 & 원터치 적용) -->
-              <div class="md:col-span-3">
-                <div class="flex items-center justify-between mb-1.5">
-                  <label for="pronInput_${item.id}" class="text-xs font-semibold text-slate-600">
-                    읽는 법 <span class="text-[11px] font-normal text-slate-400">(한글 또는 히라가나)</span>
-                  </label>
-                  <div class="flex items-center gap-1.5">
-                    <button type="button" id="pronHintBtn_${item.id}" onclick="toggleRevealSingle(${item.id})"
-                      class="${pronStatus === 'WRONG' ? '' : 'hidden'} text-[11px] font-semibold text-rose-600 underline cursor-pointer">
-                      정답 보기
-                    </button>
-                    ${pronBadgeHtml}
-                  </div>
-                </div>
-                <input type="text"
-                  id="pronInput_${item.id}"
-                  value="${escapeAttr(rec.pronunciationInput)}"
-                  autocomplete="off"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  spellcheck="false"
-                  placeholder="예: 준비, 케이켄, じゅんび"
-                  oninput="applyInputChange(${item.id}, 'pronunciationInput', this.value)"
-                  onkeydown="handleInputKeydown(event, ${item.id}, 'pronunciationInput')"
-                  onblur="handleInputBlur(${item.id}, 'pronunciationInput', this)"
-                  class="ios-input touch-target jp-font w-full px-3.5 py-2.5 border rounded-xl focus:outline-none focus:ring-2 transition ${pronInputClass}">
-
-                <!-- 한글 입력 시 하단 히라가나 변환 미리보기 및 적용 버튼 -->
-                <div id="hiraPreviewWrap_${item.id}"
-                  class="flex mt-1.5 min-h-[38px] items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl bg-violet-50 border border-violet-200 ${hasKoreanInPron ? '' : 'invisible opacity-0 pointer-events-none'}">
-                  <div class="flex items-center gap-1.5 min-w-0">
-                    <span class="text-[11px] font-semibold text-violet-600 shrink-0">변환:</span>
-                    <span id="hiraPreviewText_${item.id}" class="jp-font text-sm font-bold text-violet-950 truncate">${escapeHtml(convertedHiraPreview)}</span>
-                  </div>
-                  <button type="button" onclick="applyConvertedHiragana(${item.id})"
-                    class="shrink-0 px-2.5 py-1 rounded-lg bg-violet-600 hover:bg-violet-700 active:bg-violet-800 text-white text-[11px] font-semibold transition cursor-pointer">
-                    히라가나로 적용
-                  </button>
-                </div>
-              </div>
-
-              <!-- 4. 뜻 입력 -->
-              <div class="md:col-span-3">
-                <div class="flex items-center justify-between mb-1.5">
-                  <label for="meanInput_${item.id}" class="text-xs font-semibold text-slate-600">
-                    뜻 <span class="text-[11px] font-normal text-slate-400">(한국어 뜻)</span>
-                  </label>
-                  <div class="flex items-center gap-1.5">
-                    <button type="button" id="meanHintBtn_${item.id}" onclick="toggleRevealSingle(${item.id})"
-                      class="${meanStatus === 'WRONG' ? '' : 'hidden'} text-[11px] font-semibold text-rose-600 underline cursor-pointer">
-                      정답 보기
-                    </button>
-                    ${meanBadgeHtml}
-                  </div>
-                </div>
-                <input type="text"
-                  id="meanInput_${item.id}"
-                  value="${escapeAttr(rec.meaningInput)}"
-                  autocomplete="off"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  spellcheck="false"
-                  placeholder="한국어 뜻 입력"
-                  oninput="applyInputChange(${item.id}, 'meaningInput', this.value)"
-                  onkeydown="handleInputKeydown(event, ${item.id}, 'meaningInput')"
-                  onblur="handleInputBlur(${item.id}, 'meaningInput', this)"
-                  class="ios-input touch-target w-full px-3.5 py-2.5 border rounded-xl focus:outline-none focus:ring-2 transition ${meanInputClass}">
-              </div>
-
-              <!-- 5. 공부 더 필요함 체크박스 -->
-              <div class="md:col-span-2 flex md:justify-center items-center pt-1 md:pt-6">
-                <label class="touch-target inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border cursor-pointer select-none transition ${
-                  rec.needReview
-                    ? 'bg-amber-50 border-amber-300 text-amber-900 font-semibold'
-                    : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-                }">
-                  <input type="checkbox"
-                    ${rec.needReview ? 'checked' : ''}
-                    onchange="toggleNeedReview(${item.id}, this.checked)"
-                    class="w-4 h-4 accent-amber-500 rounded cursor-pointer">
-                  <span class="text-xs">공부 더 필요함</span>
+                ` : ''}
+                <button type="button" onclick="speakJapanese('${escapeAttr(item.word)}', '${escapeAttr(item.kana)}')"
+                  class="word-action">
+                  듣기
+                </button>
+                <button type="button" onclick="toggleRevealSingle(${item.id})"
+                  class="word-action ${isRevealed ? 'is-active' : ''}">
+                  ${isRevealed ? '정답 숨기기' : '정답 보기'}
+                </button>
+                <label class="word-action word-review-action ${rec.needReview ? 'is-review' : ''}">
+                  <input type="checkbox" ${rec.needReview ? 'checked' : ''}
+                    onchange="toggleNeedReview(${item.id}, this.checked)">
+                  공부 더 필요함
                 </label>
               </div>
             </div>
 
+            <div class="word-answer ${isRevealed ? '' : 'is-hidden'}">
+              <span class="jp-font">${escapeHtml(item.kana)}</span>
+              <span>[${escapeHtml(item.koPron)}]</span>
+              <strong>${escapeHtml(item.meaning)}</strong>
+            </div>
+
+            <div class="word-input-stack">
+              <section class="word-input-group">
+                <div class="word-input-label">
+                  <label for="pronInput_${item.id}">읽는 법 <span>(한글 또는 히라가나)</span></label>
+                  ${pronBadgeHtml}
+                </div>
+                <input type="text"
+                  id="pronInput_${item.id}"
+                  value="${escapeAttr(rec.pronunciationInput)}"
+                  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                  placeholder="읽는 법 입력"
+                  oninput="applyInputChange(${item.id}, 'pronunciationInput', this.value)"
+                  onkeydown="handleInputKeydown(event, ${item.id}, 'pronunciationInput')"
+                  onblur="handleInputBlur(${item.id}, 'pronunciationInput', this)"
+                  class="ios-input word-answer-input jp-font ${pronInputClass}">
+                <div id="hiraPreviewWrap_${item.id}"
+                  class="word-hira-preview ${hasKoreanInPron ? '' : 'is-preview-hidden'}">
+                  <span class="word-hira-caption">변환</span>
+                  <span id="hiraPreviewText_${item.id}" class="jp-font">${escapeHtml(convertedHiraPreview)}</span>
+                  <button type="button" onclick="applyConvertedHiragana(${item.id})">적용</button>
+                </div>
+              </section>
+
+              <section class="word-input-group">
+                <div class="word-input-label">
+                  <label for="meanInput_${item.id}">뜻 <span>(한국어)</span></label>
+                  ${meanBadgeHtml}
+                </div>
+                <input type="text"
+                  id="meanInput_${item.id}"
+                  value="${escapeAttr(rec.meaningInput)}"
+                  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                  placeholder="뜻 입력"
+                  oninput="applyInputChange(${item.id}, 'meaningInput', this.value)"
+                  onkeydown="handleInputKeydown(event, ${item.id}, 'meaningInput')"
+                  onblur="handleInputBlur(${item.id}, 'meaningInput', this)"
+                  class="ios-input word-answer-input ${meanInputClass}">
+              </section>
+            </div>
+
             ${isKanjiOpen ? renderKanjiAnalysisPanel(item) : ''}
-          </div>
+          </article>
         `;
       }).join('');
     }
