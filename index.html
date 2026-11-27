@@ -6,6 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="누적 일본어 단어장">
+  <meta name="theme-color" content="#f8fafc">
   <title>누적 일본어 단어장 (JLPT N5~N1)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,6 +61,228 @@
       background: #cbd5e1;
       border-radius: 9999px;
     }
+
+
+    /* iPhone 전용 모바일 UI 개선 */
+    html { scroll-behavior: smooth; }
+    body { overscroll-behavior-y: contain; }
+    button, input, label { touch-action: manipulation; }
+    input, button { font-family: inherit; }
+    .mobile-bottom-nav { display: none; }
+
+    @media (max-width: 767px) {
+      body {
+        padding-bottom: calc(88px + var(--safe-bottom));
+        background: #f5f7fb;
+      }
+      header {
+        padding-top: var(--safe-top);
+        box-shadow: 0 4px 18px rgba(15, 23, 42, .06);
+      }
+      header > div {
+        padding: 11px 14px 12px !important;
+      }
+      header h1 {
+        font-size: 18px !important;
+        letter-spacing: -.04em;
+      }
+      header p { display: none; }
+      #poolStatusBadge {
+        flex: 1 0 100%;
+        width: fit-content;
+        max-width: 100%;
+        padding: 5px 9px;
+      }
+      #poolStatusText { line-height: 1.35; }
+      #btnLevelSelector { min-height: 40px; }
+      #levelDropdownMenu {
+        position: fixed;
+        left: 14px;
+        right: 14px;
+        top: calc(var(--safe-top) + 64px);
+        width: auto;
+        max-height: 65vh;
+        overflow-y: auto;
+      }
+      header .flex.flex-wrap.items-center.gap-2 { gap: 7px; }
+      header .flex.flex-wrap.items-center.gap-2.5 { gap: 7px; }
+      header .flex.flex-wrap.items-center.gap-2 button { font-size: 12px; }
+      header .flex.flex-wrap.items-center.gap-2 button#btnNextDay,
+      header #btnNextDay {
+        flex: 1 1 100%;
+        justify-content: center;
+        min-height: 44px;
+        font-size: 13px;
+      }
+      header #btnToggleAllAnswers,
+      header button[onclick="openResetModal()"],
+      header button[onclick="openClearAnswersModal()"] {
+        flex: 1 1 calc(33.333% - 8px);
+        justify-content: center;
+        padding-left: 7px;
+        padding-right: 7px;
+        font-size: 11px;
+      }
+      main {
+        padding: 14px 12px 24px !important;
+      }
+      main > section:first-child {
+        gap: 8px !important;
+        margin-bottom: 12px !important;
+      }
+      main > section:first-child > div {
+        padding: 11px 12px !important;
+        border-radius: 15px !important;
+        min-width: 0;
+      }
+      main > section:first-child > div > div:first-child {
+        font-size: 10px !important;
+        line-height: 1.35;
+      }
+      main > section:first-child span[id^="stat"] {
+        font-size: 20px !important;
+      }
+      main > section:first-child > div > div.mt-1 {
+        gap: 5px !important;
+        flex-wrap: wrap;
+      }
+      main > section:nth-child(2) {
+        padding: 11px !important;
+        border-radius: 16px !important;
+        margin-bottom: 13px !important;
+        gap: 10px !important;
+      }
+      #dayFilterContainer {
+        width: calc(100vw - 48px);
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+        scroll-snap-type: x proximity;
+      }
+      #dayFilterContainer::-webkit-scrollbar { display: none; }
+      #dayFilterContainer button { scroll-snap-align: start; flex: 0 0 auto; }
+      #searchInput { width: 100%; min-height: 46px; border-radius: 13px; }
+      main > section:nth-child(2) .relative.shrink-0 { width: 100%; }
+      main > section:nth-child(2) > div:first-child { gap: 8px !important; }
+      main > section:nth-child(2) > div:last-child {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding-top: 9px !important;
+        gap: 7px !important;
+      }
+      main > section:nth-child(2) > div:last-child::-webkit-scrollbar { display: none; }
+      main > section:nth-child(2) > div:last-child > span { display: none; }
+      main > section:nth-child(2) > div:last-child button {
+        flex: 0 0 auto;
+        min-height: 40px;
+        padding: 8px 11px;
+        font-size: 11px;
+      }
+      #wordListContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow: visible !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+      #wordListContainer > div {
+        background: #fff !important;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 14px !important;
+        box-shadow: 0 3px 12px rgba(15, 23, 42, .045);
+      }
+      #wordListContainer > div > .grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 13px !important;
+      }
+      #wordListContainer .jp-font.text-2xl {
+        font-size: 29px !important;
+        letter-spacing: .025em;
+      }
+      #wordListContainer .ios-input {
+        min-height: 48px;
+        padding: 11px 13px;
+        border-radius: 13px;
+        font-size: 16px !important;
+        background-color: #f8fafc;
+      }
+      #wordListContainer label[for^="pronInput_"],
+      #wordListContainer label[for^="meanInput_"] {
+        font-size: 12px;
+      }
+      #wordListContainer .touch-target {
+        min-height: 42px;
+      }
+      #wordListContainer input[type="checkbox"] {
+        width: 19px;
+        height: 19px;
+      }
+      #wordListContainer label:has(input[type="checkbox"]) {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+      }
+      #wordListContainer [id^="hiraPreviewWrap_"] {
+        padding: 9px 10px;
+        flex-wrap: wrap;
+      }
+      #wordListContainer [id^="hiraPreviewWrap_"] button {
+        min-height: 36px;
+      }
+      #loadMoreContainer button {
+        width: 100%;
+        min-height: 48px;
+        border-radius: 14px;
+      }
+      #emptyState { padding: 36px 18px !important; }
+      .mobile-bottom-nav {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        position: fixed;
+        z-index: 40;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 8px 12px calc(8px + var(--safe-bottom));
+        background: rgba(255,255,255,.94);
+        border-top: 1px solid rgba(226,232,240,.95);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 -5px 22px rgba(15,23,42,.06);
+      }
+      .mobile-bottom-nav button {
+        min-height: 52px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        color: #64748b;
+        font-size: 10px;
+        font-weight: 700;
+        border-radius: 12px;
+      }
+      .mobile-bottom-nav button:active { background: #eef2ff; color: #4f46e5; }
+      .mobile-bottom-nav svg { width: 19px; height: 19px; }
+      #toast { bottom: calc(78px + var(--safe-bottom)) !important; max-width: calc(100vw - 24px); }
+      #toastMessage { white-space: normal !important; text-align: center; }
+      #clearAnswersModal > div, #resetModal > div {
+        padding: 21px !important;
+        border-radius: 20px !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -282,6 +505,23 @@
       </div>
     </section>
   </main>
+
+
+  <!-- iPhone 하단 빠른 메뉴 -->
+  <nav class="mobile-bottom-nav" aria-label="빠른 메뉴">
+    <button type="button" onclick="document.getElementById('searchInput').focus(); document.getElementById('searchInput').scrollIntoView({behavior:'smooth',block:'center'});">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+      <span>단어 검색</span>
+    </button>
+    <button type="button" onclick="setStatusFilter('REVIEW'); window.scrollTo({top:0,behavior:'smooth'});">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2.8 19a1.5 1.5 0 0 0 1.3 2.2h15.8a1.5 1.5 0 0 0 1.3-2.2L12 3Z"></path><path d="M12 9v4m0 3h.01"></path></svg>
+      <span>복습하기</span>
+    </button>
+    <button type="button" onclick="window.scrollTo({top:0,behavior:'smooth'});">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7M12 5v14"></path></svg>
+      <span>맨 위로</span>
+    </button>
+  </nav>
 
   <!-- 토스트 알림 -->
   <div id="toast"
