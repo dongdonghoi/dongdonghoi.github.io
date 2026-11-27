@@ -546,6 +546,41 @@
       #wordListContainer .kanji-card-row > div {
         flex: 0 0 min(76vw, 260px);
       }
+      .kanji-memory-tip {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-wrap: anywhere;
+        border: 1px solid #fde68a;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #fffbeb, #fff7ed);
+        padding: 11px 12px;
+        color: #78350f;
+      }
+      .kanji-memory-tip p {
+        margin-top: 5px;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+    }
+
+
+    /* 한자 분석 패널의 암기 Tip: 모바일·데스크톱 공통 */
+    .kanji-memory-tip {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fffbeb, #fff7ed);
+      padding: 11px 12px;
+      color: #78350f;
+    }
+    .kanji-memory-tip p {
+      margin-top: 5px;
+      font-size: 11px;
+      line-height: 1.55;
     }
 
   </style>
@@ -2823,6 +2858,42 @@
       container.innerHTML = html;
     }
 
+    function buildKanjiMemoryTip(item, chars) {
+      if (!chars.length) return '';
+
+      const meaningChain = chars.map(ch => `${ch}(${KANJI_DICT[ch].meaning})`).join(' + ');
+      const readingMode = chars.map(ch => {
+        const info = KANJI_DICT[ch];
+        const cleanKana = normalizeKana(item.kana);
+        const onList = info.on.split(',').map(v => normalizeKana(v.trim().split(' ')[0])).filter(Boolean);
+        const kunList = info.kun.split(',').map(v => normalizeKana(v.trim().split('(')[0].split('.')[0])).filter(Boolean);
+        const onUsed = onList.some(v => cleanKana.includes(v));
+        const kunUsed = kunList.some(v => v && cleanKana.includes(v));
+        if (onUsed && !kunUsed) return `${ch}: 음독`;
+        if (kunUsed && !onUsed) return `${ch}: 훈독`;
+        return `${ch}: 단어 전체 읽기`;
+      }).join(' · ');
+
+      const readingAdvice = readingMode.includes('음독')
+        ? '음독이 쓰인 글자는 개별 음독을 따로 외우기보다 이 단어의 소리와 한 묶음으로 반복해 보세요.'
+        : readingMode.includes('훈독')
+          ? '훈독이 쓰인 글자는 한자의 기본 뜻과 일본어 동사·형용사 읽기를 함께 연결해 보세요.'
+          : '특수 읽기일 수 있으니 개별 한자의 읽기를 억지로 조합하지 말고, 단어 전체의 읽기를 통째로 기억하세요.';
+
+      return `
+        <div class="kanji-memory-tip">
+          <div class="flex items-center gap-2 text-xs font-extrabold text-amber-900">
+            <span aria-hidden="true">💡</span>
+            <span>쉽게 외우는 암기 Tip</span>
+          </div>
+          <p><strong>① 뜻으로 연결하기</strong><br>${escapeHtml(meaningChain)} — 각 한자의 뜻을 먼저 떠올린 다음, 단어 뜻인 <strong>「${escapeHtml(item.meaning)}」</strong>과 연결해 보세요. 한 글자씩 의미의 단서를 잡으면 단어가 더 오래 기억납니다.</p>
+          <p><strong>② 읽는 법 묶어 외우기</strong><br>${escapeHtml(readingMode)}<br>${escapeHtml(readingAdvice)}</p>
+          <p><strong>③ 5초 회상 연습</strong><br>분석을 잠깐 가리고 <span class="jp-font font-bold">${escapeHtml(item.word)}</span>를 보고 읽기 <strong>${escapeHtml(item.kana)}</strong>와 뜻을 먼저 떠올려 보세요.</p>
+          <p class="!text-[10px] !text-amber-700">※ 뜻 연결은 기억을 돕는 연상법이며, 한자의 어원이나 글자 구성에 대한 설명은 아닙니다.</p>
+        </div>
+      `;
+    }
+
     function renderKanjiAnalysisPanel(item) {
       const chars = [...item.word].filter(ch => KANJI_DICT[ch]);
       const ex = item.example || { jp: "", kana: "", ko: "" };
@@ -2880,6 +2951,7 @@
           <div class="kanji-card-row grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             ${kanjiCardsHtml}
           </div>
+          ${buildKanjiMemoryTip(item, chars)}
           ${ex.jp ? `
             <div class="pt-2.5 border-t border-indigo-100/90 space-y-1">
               <div class="flex items-center justify-between">
