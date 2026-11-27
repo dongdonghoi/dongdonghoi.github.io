@@ -228,9 +228,40 @@
         justify-content: center;
         min-height: 44px;
       }
+      /* 한자 분석 카드는 세로로 길게 쌓지 않고 가로로 넘겨 보기 */
+      #wordListContainer .kanji-card-row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        gap: 9px;
+        padding-bottom: 4px;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+      }
+      #wordListContainer .kanji-card-row > div {
+        flex: 0 0 min(78vw, 270px);
+        min-width: 0;
+      }
       #wordListContainer [id^="hiraPreviewWrap_"] {
-        padding: 9px 10px;
-        flex-wrap: wrap;
+        min-height: 38px;
+        padding: 7px 9px;
+        flex-wrap: nowrap;
+        overflow: hidden;
+      }
+      #wordListContainer [id^="hiraPreviewWrap_"] button {
+        min-height: 32px;
+        padding: 5px 8px;
+        font-size: 10px;
+      }
+      #wordListContainer [id^="hiraPreviewText_"] {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #wordListContainer [id^="pronStatus_"],
+      #wordListContainer [id^="meanStatus_"] {
+        min-width: 46px;
+        text-align: center;
       }
       #wordListContainer [id^="hiraPreviewWrap_"] button {
         min-height: 36px;
@@ -2219,15 +2250,13 @@
 
       const hasKorean = /[가-힣]/.test(rawValue || '');
       if (!hasKorean) {
-        previewWrap.classList.add('hidden');
-        previewWrap.classList.remove('flex');
+        previewWrap.classList.add('invisible', 'opacity-0', 'pointer-events-none');
         return;
       }
 
       const converted = convertKoreanToHiragana(rawValue);
       previewText.textContent = converted;
-      previewWrap.classList.remove('hidden');
-      previewWrap.classList.add('flex');
+      previewWrap.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
     }
 
     function applyConvertedHiragana(id) {
@@ -2260,11 +2289,9 @@
       bucket.userRecords[id] = rec;
       saveState();
 
-      if (bucket.statusFilter !== 'ALL') {
-        renderWordList();
-      } else {
-        updateInlineFeedback(item);
-      }
+      // 입력창 blur 시 목록 전체를 다시 그리면 현재 카드가 사라지거나
+      // 스크롤 위치가 튀므로, 현재 화면은 유지하고 상태 표시만 갱신한다.
+      updateInlineFeedback(item);
       updateStats();
       updateStatusFilterBadges();
     }
@@ -2616,7 +2643,7 @@
             <span class="text-xs font-bold text-indigo-900">한자 구성 분석 (${escapeHtml(item.word)})</span>
             <span class="text-[11px] text-indigo-600 font-medium">단어 읽기: ${escapeHtml(item.kana)}</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="kanji-card-row grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             ${kanjiCardsHtml}
           </div>
           ${ex.jp ? `
@@ -2777,7 +2804,7 @@
 
                 <!-- 한글 입력 시 하단 히라가나 변환 미리보기 및 적용 버튼 -->
                 <div id="hiraPreviewWrap_${item.id}"
-                  class="${hasKoreanInPron ? 'flex' : 'hidden'} mt-1.5 items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl bg-violet-50 border border-violet-200">
+                  class="flex mt-1.5 min-h-[38px] items-center justify-between gap-2 px-2.5 py-1.5 rounded-xl bg-violet-50 border border-violet-200 ${hasKoreanInPron ? '' : 'invisible opacity-0 pointer-events-none'}">
                   <div class="flex items-center gap-1.5 min-w-0">
                     <span class="text-[11px] font-semibold text-violet-600 shrink-0">변환:</span>
                     <span id="hiraPreviewText_${item.id}" class="jp-font text-sm font-bold text-violet-950 truncate">${escapeHtml(convertedHiraPreview)}</span>
